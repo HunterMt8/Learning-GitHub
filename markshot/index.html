@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Markshot</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect x='3' y='3' width='26' height='26' rx='8' fill='%23e2f08a'/%3E%3Ccircle cx='16' cy='16' r='6' fill='none' stroke='%2317210d' stroke-width='2'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="css/app.css">
+</head>
+<body>
+  <div id="app">
+    <header class="top">
+      <div class="brand">
+        <svg viewBox="0 0 32 32" aria-hidden="true">
+          <rect x="3" y="3" width="26" height="26" rx="8" fill="#e2f08a"/>
+          <circle cx="16" cy="16" r="6" fill="none" stroke="#17210d" stroke-width="2"/>
+          <circle cx="16" cy="16" r="2" fill="#17210d"/>
+        </svg>
+        <div>
+          <strong>Markshot</strong>
+          <span>Capture and mark up</span>
+        </div>
+      </div>
+      <input id="title-input" aria-label="Capture title" value="Untitled capture">
+      <div class="actions">
+        <button id="capture-btn" class="primary" type="button">Capture</button>
+        <button id="record-btn" class="textish" type="button" aria-pressed="false">Record</button>
+        <button id="open-btn" class="textish" type="button">Open</button>
+        <button id="sample-btn" class="textish" type="button">Sample</button>
+        <button id="undo-btn" class="textish" type="button" disabled>Undo</button>
+        <button id="redo-btn" class="textish" type="button" disabled>Redo</button>
+        <button id="fit-btn" class="textish" type="button" disabled>Fit</button>
+        <button id="copy-btn" class="textish" type="button" disabled>Copy</button>
+        <button id="save-btn" class="textish" type="button" disabled>Save</button>
+        <button id="download-btn" class="textish" type="button" disabled>Download</button>
+      </div>
+      <input id="file-input" type="file" accept="image/*" hidden>
+    </header>
+
+    <nav class="tools" aria-label="Markup tools"></nav>
+
+    <main id="stage" data-cursor="select">
+      <canvas id="view"></canvas>
+      <div id="empty">
+        <div class="empty-card">
+          <h1>Grab a screen, then mark it up.</h1>
+          <p>Capture a display, record a clip, or open an image. Arrows, text, numbered steps, and blur stay editable until you download.</p>
+          <div class="empty-actions">
+            <button id="empty-capture" class="primary" type="button">Capture screen</button>
+            <button id="empty-sample" class="textish" type="button">Use a sample</button>
+            <button id="empty-open" class="textish" type="button">Open image</button>
+          </div>
+        </div>
+      </div>
+      <textarea id="text-input" hidden rows="2" aria-label="Annotation text"></textarea>
+      <div id="crop-bar" class="crop-bar" hidden>
+        <span>Crop to this region</span>
+        <button id="crop-apply" class="primary" type="button">Apply</button>
+        <button id="crop-cancel" class="textish" type="button">Cancel</button>
+      </div>
+      <div id="record-bar" class="record-bar" hidden>
+        <span class="rec-dot" aria-hidden="true"></span>
+        <strong id="record-time">0:00</strong>
+        <button id="record-pause" class="textish" type="button">Pause</button>
+        <button id="record-stop" class="primary" type="button">Stop</button>
+      </div>
+    </main>
+
+    <aside class="inspector">
+      <h2>Mark</h2>
+      <div id="swatches" class="swatches"></div>
+      <input id="color-input" type="color" value="#ff3355" aria-label="Custom color">
+      <div class="row">
+        <label for="width-input">Stroke</label>
+        <span id="width-label">4px</span>
+      </div>
+      <input id="width-input" type="range" min="2" max="28" value="4" aria-label="Stroke width">
+
+      <h2>Frame</h2>
+      <div class="meta-grid">
+        <div><span class="meta">Size</span><strong id="meta-size">No capture</strong></div>
+        <div><span class="meta">Zoom</span><strong id="meta-zoom">—</strong></div>
+        <div><span class="meta">Next step</span><strong id="meta-step">1</strong></div>
+        <button id="reset-step" class="textish" type="button">Reset steps</button>
+      </div>
+
+      <h2>Recording</h2>
+      <label class="check">
+        <input id="mic-toggle" type="checkbox">
+        Mix in the microphone
+      </label>
+      <p class="hint">The browser asks which screen or window to share. Clips are saved in this browser and downloaded as WebM or MP4.</p>
+
+      <h2>Library</h2>
+      <div id="library"><p class="empty-copy">Saved captures stay in this browser.</p></div>
+
+      <h2>Shortcuts</h2>
+      <details>
+        <summary>Keys</summary>
+        <p>V select, P pen, H highlight, A arrow, L line, R rectangle, E ellipse, T text, N step, B blur, C crop. Delete removes the selection. Space pans, wheel zooms, Ctrl or Cmd 0 fits, Ctrl or Cmd Z undoes, Ctrl or Cmd S saves.</p>
+      </details>
+    </aside>
+  </div>
+
+  <div id="toast" role="status" hidden></div>
+
+  <dialog id="dialog">
+    <form method="dialog">
+      <h2 id="dialog-title"></h2>
+      <div id="dialog-body"></div>
+      <div class="dialog-actions">
+        <button type="submit" value="cancel">Cancel</button>
+        <button id="dialog-ok" class="primary" type="submit" value="ok">OK</button>
+      </div>
+    </form>
+  </dialog>
+
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>
